@@ -58,14 +58,14 @@ pritunl_parameters = {
 
 4 - Generate administrator key "pritunl default-password" (root)
 
-4 - Navigate web interface via HTTPS (custom domain / public IP) ( takes a few minutes )
+5 - Navigate web interface via HTTPS (custom domain / public IP) ( takes a few minutes )
 
-5 - "Initial Setup" ( Web Interface )
+6 - "Initial Setup" ( Web Interface )
   * New Password = Specify new password
   * Public Address = Complete with Public Domain or IP
   * Lets Encrypt Domain = In case of having a public domain, indicate it
 
-6 - Server Configuration ( Web Interface )
+7 - Server Configuration ( Web Interface )
   * Users > Add Organization
     Name : "{key.company}-{key.env}" # Example: dmc-dev / gcl-stg / etc
 
