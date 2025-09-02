@@ -41,6 +41,18 @@ pritunl_parameters = {
 
 
 
+## 📑 Inputs
+| Name                   | Description                                                         | Type     | Default                                                   | Required |
+| ---------------------- | ------------------------------------------------------------------- | -------- | --------------------------------------------------------- | -------- |
+| subnet_id              | The ID of the subnet where the Pritunl instance will be deployed    | `string` | `element(data.aws_subnets.public.ids, 0)`                 | no       |
+| aws_ami_name           | The Amazon Machine Image (AMI) name to use for the Pritunl instance | `string` | `ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*` | no       |
+| domain                 | The domain name to associate with the Pritunl instance              | `string` | `""`                                                      | no       |
+| create_route53_records | (Optional) With `domain` variable controls if create DNS Record     | `bool`   | `true`                                                    | no       |
+| vpc_name               | (Optional) VPC Name to use                                          | `string` | ``${local.common_name}` Example: dmc-prd`                 | no       |
+| subnet_name            | (Optional) Subnet Name to use                                       | `string` | ``${local.common_name}-public*` Example: dmc-prd-public*` | no       |
+| vpc_id                 | (Optional) VPC ID to use                                            | `string` | `null`                                                    | no       |
+| subnet_id              | (Optional) Subnet ID to use                                         | `string` | `null`                                                    | no       |
+
 
 
 
