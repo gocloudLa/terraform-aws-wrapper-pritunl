@@ -60,6 +60,55 @@ pritunl_defaults = var.pritunl_defaults
 - **⚠️ AMI Selection:** Uses Ubuntu 24.04 LTS by default, ensure AMI is available in your region
 - **⚠️ Network Configuration:** Instance deploys in public subnet with security group access
 
+## Initial Configuration Steps
+
+After the Terraform deployment completes, follow these steps to configure Pritunl:
+
+**1. Server Access:**
+- Login to server via SSM
+
+**2. Installation Verification:**
+- Check logs and wait for installation to complete: `tail -f /var/log/syslog`
+
+**3. Service Configuration:**
+- Restart pritunl service: `systemctl restart pritunl` (root)
+- Generate administrator key: `pritunl default-password` (root)
+
+**4. Web Interface Access:**
+- Navigate to web interface via HTTPS (custom domain / public IP) - takes a few minutes
+
+**5. Initial Setup (Web Interface):**
+- New Password = Specify new password
+- Public Address = Complete with Public Domain or IP
+- Lets Encrypt Domain = In case of having a public domain, indicate it
+
+**6. Server Configuration (Web Interface):**
+- Users > Add Organization
+  * Name: `{key.company}-{key.env}` # Example: dmc-dev / gcl-stg / etc
+
+- Servers > Add Server (Click on Advanced)
+  * Name: `{key.company}-{key.env}` # Example: dmc-dev / gcl-stg / etc
+  * DNS Server: VPC DNS, Always the second IP of the VPC (Example vpc_cidr = 10.100.0.0/16, DNS Server = 10.100.0.2)
+  * Enable DNS Routing: Check
+  * Allow Multiple Devices: Check
+  * Inter-Client Routing: NO Check
+
+**7. Network Configuration:**
+- Delete Route "0.0.0.0/0" (We avoid sending ALL traffic through the VPN)
+- Add Route
+  * Network: VPC_CIDR (Example 10.100.0.0/16)
+
+**8. Organization and Server Setup:**
+- Servers > Attach Organization
+  * Leave options as Default
+
+- Servers > Start Server
+
+**9. User Management:**
+- Users > Add User
+  * Name: Format `{FirstName}.{LastName}`
+  * Pin: Optional, if you want to request a numeric pin from the user
+
 
 
 ---
