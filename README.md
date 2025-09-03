@@ -41,8 +41,8 @@ pritunl_defaults = var.pritunl_defaults
 | Name                   | Description                                                         | Type     | Default                                                       | Required |
 | ---------------------- | ------------------------------------------------------------------- | -------- | ------------------------------------------------------------- | -------- |
 | enable                 | Whether to create the Pritunl VPN instance                          | `bool`   | `false`                                                       | no       |
-| vpc_id                 | The ID of the VPC where the Pritunl instance will be deployed       | `string` | `data.aws_vpc.this[0].id`                                     | no       |
-| subnet_id              | The ID of the subnet where the Pritunl instance will be deployed    | `string` | `element(data.aws_subnets.this[0].ids, 0)`                    | no       |
+| vpc_id                 | The ID of the VPC where the Pritunl instance will be deployed       | `string` | `null`                                                        | no       |
+| subnet_id              | The ID of the subnet where the Pritunl instance will be deployed    | `string` | `null`                                                        | no       |
 | aws_ami_name           | The Amazon Machine Image (AMI) name to use for the Pritunl instance | `string` | `ubuntu/images/hvm-ssd-gp3/ubuntu-noble-24.04-amd64-server-*` | no       |
 | domain                 | The domain name to associate with the Pritunl instance              | `string` | `""`                                                          | no       |
 | create_route53_records | Whether to create Route53 DNS records for the domain                | `bool`   | `true`                                                        | no       |
