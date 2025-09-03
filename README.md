@@ -23,17 +23,13 @@ This folder contains the necessary resources to manage secure access to the infr
 ## 🚀 Quick Start
 ```hcl
 pritunl_parameters = {
-    enable       = true
-    # create_route53_records = false # Default: true
-    domain       = "${local.zone_public}"
-    aws_ami_name = "ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-20221212"
-    # vpc_name = "" # (Optional) Default: ${local.common_name} / Example: dmc-prd
-    # subnet_name = "" # (Optional) Default: ${local.common_name}-public* / Example: dmc-prd-public*
-    # vpc_id = "" # (Optional) Default: null
-    # subnet_id = "" # (Optional) Default: null
-  }
+  enable = true
+  domain = "${local.zone_public}"
+  aws_ami_name = "ubuntu/images/hvm-ssd-gp3/ubuntu-noble-24.04-amd64-server-*"
+  create_route53_records = true
+}
 
-  pritunl_defaults = var.pritunl_defaults
+pritunl_defaults = var.pritunl_defaults
 ```
 
 
@@ -42,17 +38,15 @@ pritunl_parameters = {
 
 
 ## 📑 Inputs
-| Name                   | Description                                                         | Type     | Default                                                   | Required |
-| ---------------------- | ------------------------------------------------------------------- | -------- | --------------------------------------------------------- | -------- |
-| subnet_id              | The ID of the subnet where the Pritunl instance will be deployed    | `string` | `element(data.aws_subnets.public.ids, 0)`                 | no       |
-| aws_ami_name           | The Amazon Machine Image (AMI) name to use for the Pritunl instance | `string` | `ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*` | no       |
-| domain                 | The domain name to associate with the Pritunl instance              | `string` | `""`                                                      | no       |
-| create_route53_records | (Optional) With `domain` variable controls if create DNS Record     | `bool`   | `true`                                                    | no       |
-| vpc_name               | (Optional) VPC Name to use                                          | `string` | ``${local.common_name}` Example: dmc-prd`                 | no       |
-| subnet_name            | (Optional) Subnet Name to use                                       | `string` | ``${local.common_name}-public*` Example: dmc-prd-public*` | no       |
-| vpc_id                 | (Optional) VPC ID to use                                            | `string` | `null`                                                    | no       |
-| subnet_id              | (Optional) Subnet ID to use                                         | `string` | `null`                                                    | no       |
-| tags                   | (Optional) Custom tags to assign to resources                       | `map`    | `null`                                                    | no       |
+| Name                   | Description                                                         | Type     | Default                                                       | Required |
+| ---------------------- | ------------------------------------------------------------------- | -------- | ------------------------------------------------------------- | -------- |
+| enable                 | Whether to create the Pritunl VPN instance                          | `bool`   | `false`                                                       | no       |
+| vpc_id                 | The ID of the VPC where the Pritunl instance will be deployed       | `string` | `data.aws_vpc.this[0].id`                                     | no       |
+| subnet_id              | The ID of the subnet where the Pritunl instance will be deployed    | `string` | `element(data.aws_subnets.this[0].ids, 0)`                    | no       |
+| aws_ami_name           | The Amazon Machine Image (AMI) name to use for the Pritunl instance | `string` | `ubuntu/images/hvm-ssd-gp3/ubuntu-noble-24.04-amd64-server-*` | no       |
+| domain                 | The domain name to associate with the Pritunl instance              | `string` | `""`                                                          | no       |
+| create_route53_records | Whether to create Route53 DNS records for the domain                | `bool`   | `true`                                                        | no       |
+| tags                   | Custom tags to assign to resources                                  | `map`    | `null`                                                        | no       |
 
 
 
@@ -61,48 +55,10 @@ pritunl_parameters = {
 
 
 ## ⚠️ Important Notes
-### Initial Configuration
-```
-1 - Login to server via SSM
-
-2 - Check logs and wait for installation to complete ( tail -f /var/log/syslog )
-
-3 - Restart pritunl service "systemctl restart pritunl" (root)
-
-4 - Generate administrator key "pritunl default-password" (root)
-
-4 - Navigate web interface via HTTPS (custom domain / public IP) ( takes a few minutes )
-
-5 - "Initial Setup" ( Web Interface )
-  * New Password = Specify new password
-  * Public Address = Complete with Public Domain or IP
-  * Lets Encrypt Domain = In case of having a public domain, indicate it
-
-6 - Server Configuration ( Web Interface )
-  * Users > Add Organization
-    Name : "{key.company}-{key.env}" # Example: dmc-dev / gcl-stg / etc
-
-  * Servers > Add Server ( Click on Advanced )
-    Name : "{key.company}-{key.env}" # Example: dmc-dev / gcl-stg / etc
-    DNS Server : VPC DNS, Always the second IP of the VPC (Example vpc_cidr = 10.100.0.0/16, DNS Server = 10.100.0.2)
-    Enable DNS Routing: Check
-    Allow Multiple Devices: Check
-    Inter-Client Routing: NO Check
-
-  * Delete Route "0.0.0.0/0" (We avoid sending ALL traffic through the VPN)
-
-  * Add Route
-    * Network: VPC_CIDR ( Example 10.100.0.0/16 )
-
-  * Servers > Attach Organization
-    Leave options as Default
-
-  * Servers > Start Server
-
-  * Users > Add User
-    Name: Format {FirstName}.{LastName}name
-    Pin: Optional, if you want to request a numeric pin from the user
-```
+- **⚠️ Instance Creation:** Set `enable = true` to create the Pritunl VPN instance
+- **⚠️ Domain Configuration:** Provide `domain` to create Route53 DNS records automatically
+- **⚠️ AMI Selection:** Uses Ubuntu 24.04 LTS by default, ensure AMI is available in your region
+- **⚠️ Network Configuration:** Instance deploys in public subnet with security group access
 
 
 
