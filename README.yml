@@ -27,8 +27,7 @@ important_notes: |
   - **⚠️ AMI Selection:** Uses Ubuntu 24.04 LTS by default, ensure AMI is available in your region
   - **⚠️ Network Configuration:** Instance deploys in public subnet with security group access
 
-initial_configuration: |
-  ### Initial Configuration Steps
+  ## Initial Configuration Steps
   
   After the Terraform deployment completes, follow these steps to configure Pritunl:
   
