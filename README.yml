@@ -1,0 +1,49 @@
+module_name: Terraform VPN Access Module
+module_description: This folder contains the necessary resources to manage secure access to the infrastructure. It is a VPN solution that allows the management of secure connections through private networks.
+module_badges:
+  - url: "https://github.com/gocloudLa/terraform-aws-wrapper-pritunl/releases/latest"
+    image: "https://img.shields.io/github/v/release/gocloudLa/terraform-aws-wrapper-pritunl.svg?style=for-the-badge"
+    alt: "Latest Release"
+  - url: ""
+    image: "https://img.shields.io/github/last-commit/gocloudLa/terraform-aws-wrapper-pritunl.svg?style=for-the-badge"
+    alt: "Last Commit"
+  - url: "https://registry.terraform.io/modules/gocloudLa/wrapper-pritunl/aws"
+    image: "https://img.shields.io/badge/Terraform-Registry-7B42BC?style=for-the-badge&logo=terraform&logoColor=white"
+    alt: "Terraform Registry"
+quick_start: |
+  ```hcl
+  pritunl_parameters = {
+      enable       = true
+      # create_route53_records = false # Default: true
+      domain       = "${local.zone_public}"
+      aws_ami_name = "ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-20221212"
+      # vpc_name = "" # (Optional) Default: ${local.common_name} / Example: dmc-prd
+      # subnet_name = "" # (Optional) Default: ${local.common_name}-public* / Example: dmc-prd-public*
+      # vpc_id = "" # (Optional) Default: null
+      # subnet_id = "" # (Optional) Default: null
+    }
+  
+    pritunl_defaults = var.pritunl_defaults
+  ```
+features:
+  - icon: 🔧
+    title: Initial Configuration
+    short_description: Provides remote server access, log monitoring, and service restart
+    long_description: |
+      ```
+      1 - Log in to the server via SSM
+      2 - Check logs and wait for the installation to complete (tail -f /var/log/syslog)
+      3 - Restart the pritunl service "systemctl restart pritunl" (root)
+      ```
+    examples:
+important_notes: ""
+input_table: |
+  | subnet_id | The ID of the subnet where the Pritunl instance will be deployed | `string` | `element(data.aws_subnets.public.ids, 0)` | no |
+  | aws_ami_name | The Amazon Machine Image (AMI) name to use for the Pritunl instance | `string` | `ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*` | no |
+  | domain | The domain name to associate with the Pritunl instance | `string` | `""` | no |
+  | create_route53_records | (Optional) With `domain` variable controls if create DNS Record | `bool` | `true` | no |
+  | vpc_name | (Optional) VPC Name to use | `string` | ``${local.common_name}` Example: dmc-prd` | no |
+  | subnet_name | (Optional) Subnet Name to use | `string` | ``${local.common_name}-public*` Example: dmc-prd-public*` | no |
+  | vpc_id | (Optional) VPC ID to use | `string` | `null` | no |
+  | subnet_id | (Optional) Subnet ID to use | `string` | `null` | no |
+  | tags | (Optional) Custom tags to assign to resources | `map` | `null` | no |
