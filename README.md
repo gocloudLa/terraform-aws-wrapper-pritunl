@@ -29,8 +29,6 @@ pritunl_parameters = {
   aws_ami_name = "ubuntu/images/hvm-ssd-gp3/ubuntu-noble-24.04-amd64-server-*"
   create_route53_records = false
 }
-
-pritunl_defaults = var.pritunl_defaults
 ```
 
 
