@@ -23,6 +23,6 @@ data "aws_subnets" "this" {
   }
 
   tags = {
-    Name = try(var.pritunl_parameters.subnet_name, "${local.default_subnet_name}")
+    Name = try(var.pritunl_parameters.subnet_name, "${local.default_subnet_public_name}")
   }
 }
