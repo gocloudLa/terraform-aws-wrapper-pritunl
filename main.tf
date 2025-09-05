@@ -10,6 +10,6 @@ module "pritunl" {
   domain                 = try(var.pritunl_parameters.domain, "")
   create_route53_records = try(var.pritunl_parameters.create_route53_records, true)
 
-  tags = merge(local.common_tags, try(var.pritunl_parameters.tags, null))
+  tags = merge(local.common_tags, try(var.pritunl_parameters.tags, var.pritunl_defaults.tags, null))
 
 }

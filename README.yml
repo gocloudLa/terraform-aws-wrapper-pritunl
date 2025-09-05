@@ -84,4 +84,4 @@ input_table: |
   | subnet_name | The Name of the Subnet where the Pritunl instance will be deployed | `string` | `null` | no |
   | domain | The domain name to associate with the Pritunl instance | `string` | `""` | no |
   | create_route53_records | Whether to create Route53 DNS records for the domain | `bool` | `true` | no |
-  | tags | Custom tags to assign to resources | `map` | `null` | no |
+  | tags | A map of tags to assign to resources. | `map` | `{}` | no |
