@@ -29,8 +29,8 @@ module "ec2_instance" {
     encrypted             = lookup(var.root_block_device, "encrypted", true)
     iops                  = lookup(var.root_block_device, "iops", null)
     kms_key_id            = lookup(var.root_block_device, "kms_key_id", null)
-    volume_size           = lookup(var.root_block_device, "volume_size", 20)
-    volume_type           = lookup(var.root_block_device, "volume_type", "gp3")
+    size                  = lookup(var.root_block_device, "size", 20)
+    type                  = lookup(var.root_block_device, "type", "gp3")
     throughput            = lookup(var.root_block_device, "throughput", null)
   }
 
