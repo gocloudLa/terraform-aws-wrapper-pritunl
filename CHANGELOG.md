@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.2](https://github.com/gocloudLa/terraform-aws-wrapper-pritunl/compare/v1.0.1...v1.0.2) (2026-02-26)
+
+
+### Bug Fixes
+
+* **deps:** bump terraform-aws-modules/ec2-instance/aws from 6.1.4 to 6.2.0 in /modules/aws/terraform-aws-pritunl in the all-terraform-dependencies group across 1 directory ([#9](https://github.com/gocloudLa/terraform-aws-wrapper-pritunl/issues/9)) ([c071fc5](https://github.com/gocloudLa/terraform-aws-wrapper-pritunl/commit/c071fc578ba655dcb2f77d7c47287bd9014aa401))
+
 ## [1.0.1](https://github.com/gocloudLa/terraform-aws-wrapper-pritunl/compare/v1.0.0...v1.0.1) (2025-11-25)
 
 
