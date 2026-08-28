@@ -47,25 +47,7 @@ module "security_group" {
   vpc_id          = var.vpc_id
   use_name_prefix = false
 
-  ingress_with_cidr_blocks = [
-    {
-      rule        = "http-80-tcp"
-      cidr_blocks = "0.0.0.0/0"
-      description = "Enable all access"
-    },
-    {
-      rule        = "https-443-tcp"
-      cidr_blocks = "0.0.0.0/0"
-      description = "Enable all access"
-    },
-    {
-      from_port   = 10000
-      to_port     = 16999
-      protocol    = "udp"
-      description = "Pritunl"
-      cidr_blocks = "0.0.0.0/0"
-    }
-  ]
+  ingress_with_cidr_blocks = local.ingress_with_cidr_blocks
 
   egress_rules = ["all-all"]
 
