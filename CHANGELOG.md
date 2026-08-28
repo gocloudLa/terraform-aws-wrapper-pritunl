@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://github.com/gocloudLa/terraform-aws-wrapper-pritunl/compare/v1.0.2...v1.1.0) (2026-08-28)
+
+
+### Features
+
+* **sg:** add custom rules support ([#14](https://github.com/gocloudLa/terraform-aws-wrapper-pritunl/issues/14)) ([152bc98](https://github.com/gocloudLa/terraform-aws-wrapper-pritunl/commit/152bc984ca71eaa88c23cae912d7c48bdb6b9b13))
+
 ## [1.0.2](https://github.com/gocloudLa/terraform-aws-wrapper-pritunl/compare/v1.0.1...v1.0.2) (2026-02-26)
 
 
