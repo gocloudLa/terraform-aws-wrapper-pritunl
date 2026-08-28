@@ -70,3 +70,9 @@ variable "create_route53_records" {
   type    = bool
   default = true
 }
+
+variable "ingress_with_cidr_blocks" {
+  description = "List of ingress rules with CIDR blocks for the Pritunl security group"
+  type        = list(any)
+  default     = null
+}
